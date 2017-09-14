@@ -35,27 +35,37 @@ public class MainTest {
     }
 
     @Test
-    public void file_name에_골뱅이가_없으면_mdpi(){
+    public void file_name에_골뱅이가_없으면_mdpi() {
         String fileName = "res1.xml";
         String result = moveFile(fileName);
-        assertEquals("/res/drawable-mdpi/"+fileName, result);
+        assertEquals("/res/drawable-mdpi/" + fileName, result);
     }
 
     @Test
-    public void file_name에_골뱅이2x_then_xhdpi(){
+    public void file_name에_골뱅이2x_then_xhdpi() {
         String fileName = "res1@2x.xml";
         String result = moveFile(fileName);
-        assertEquals("/res/drawable-xhdpi/"+fileName, result);
+        assertEquals("/res/drawable-xhdpi/" + fileName.replace("@2x", ""), result);
     }
 
-
-
+    @Test
+    public void file_name에_골뱅이3x_then_xxxhdpi() {
+        String fileName = "res1@3x.xml";
+        String result = moveFile(fileName);
+        assertEquals("/res/drawable-xxxhdpi/" + fileName.replace("@3x", ""), result);
+    }
 
     private String moveFile(String fileName) {
+        if (fileName.contains("@3x")) {
+            return "/res/drawable-xxxhdpi/" + fileName.replace("@3x", "");
+        }
+        if (fileName.contains("@2x")) {
+            return "/res/drawable-xhdpi/" + fileName.replace("@2x", "");
+        }
         return "/res/drawable-mdpi/" + fileName;
     }
 
-    static class Paths{
+    static class Paths {
         public String source;
         public String target;
 
