@@ -34,6 +34,27 @@ public class MainTest {
         assertEquals(currentPath, result.target);
     }
 
+    @Test
+    public void file_name에_골뱅이가_없으면_mdpi(){
+        String fileName = "res1.xml";
+        String result = moveFile(fileName);
+        assertEquals("/res/drawable-mdpi/"+fileName, result);
+    }
+
+    @Test
+    public void file_name에_골뱅이2x_then_xhdpi(){
+        String fileName = "res1@2x.xml";
+        String result = moveFile(fileName);
+        assertEquals("/res/drawable-xhdpi/"+fileName, result);
+    }
+
+
+
+
+    private String moveFile(String fileName) {
+        return "/res/drawable-mdpi/" + fileName;
+    }
+
     static class Paths{
         public String source;
         public String target;
