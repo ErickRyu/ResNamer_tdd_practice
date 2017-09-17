@@ -62,8 +62,15 @@ public class MainTest {
         assertEquals("/res/drawable-mdpi/" + fileName.replace("-", "_"), result);
     }
 
+    @Test
+    public void moveFile은_대문자를_소문자로_변환해서_보내준다(){
+        String fileName = "ResFileABCDEFG.xml";
+        String result = moveFile(fileName);
+        assertEquals("/res/drawable-mdpi/" + fileName.toLowerCase(), result);
+    }
+
     private String moveFile(String fileName) {
-        fileName = fileName.replace("-", "_");
+        fileName = fileName.replace("-", "_").toLowerCase();
         if (fileName.contains("@3x")) {
             return "/res/drawable-xxxhdpi/" + fileName.replace("@3x", "");
         }
