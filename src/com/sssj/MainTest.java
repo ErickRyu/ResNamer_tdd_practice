@@ -14,6 +14,15 @@ public class MainTest {
         Paths result = folderResolver("aaa", "");
         assertEquals(result.source, result.target);
     }
+    @Test
+    public void target이없을경우source를target으로사용해서_변환된파일이름과_합쳐진결과를반환한다(){
+        String fileName = "resFile-01@2x.xml";
+        String source = "sourceFolder";
+        Paths path = folderResolver(source, "");
+        String toSave = source + "/res/drawable-xhdpi/resfile_01.xml";
+        String result = getSaveTargetAndName(path, fileName);
+        assertEquals(toSave, result);
+    }
 
     @Test
     public void target과source가같이들어오면각각을사용한다() {
@@ -69,6 +78,10 @@ public class MainTest {
         assertEquals("/res/drawable-mdpi/" + fileName.toLowerCase(), result);
     }
 
+    private String getSaveTargetAndName(Paths path, String fileName){
+        String target = folderResolver(path.source, path.target).target;
+        return  target + moveFile(fileName);
+    }
     private String moveFile(String fileName) {
         fileName = fileName.replace("-", "_").toLowerCase();
         if (fileName.contains("@3x")) {
