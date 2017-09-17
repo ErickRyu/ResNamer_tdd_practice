@@ -113,7 +113,7 @@ public class MainTest {
     }
 
 
-    private Paths folderResolver(String source, String target) {
+    private Paths folderResolver_0_1(String source, String target) {
         if (source.isEmpty()) {
             return new Paths(getCurrentPath(), getCurrentPath());
         }
@@ -121,5 +121,8 @@ public class MainTest {
             return new Paths(source, source);
         }
         return new Paths(source, target);
+    }
+    private Paths folderResolver(String source, String target){
+        return folderResolver_0_1(source, target);
     }
 }
