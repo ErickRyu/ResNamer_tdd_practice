@@ -55,7 +55,15 @@ public class MainTest {
         assertEquals("/res/drawable-xxxhdpi/" + fileName.replace("@3x", ""), result);
     }
 
+    @Test
+    public void moveFile은_하이픈을_언더바로_바꿔서_결과에_하이픈이_없어야한다(){
+        String fileName = "res-1-19-dd.xml";
+        String result = moveFile(fileName);
+        assertEquals("/res/drawable-mdpi/" + fileName.replace("-", "_"), result);
+    }
+
     private String moveFile(String fileName) {
+        fileName = fileName.replace("-", "_");
         if (fileName.contains("@3x")) {
             return "/res/drawable-xxxhdpi/" + fileName.replace("@3x", "");
         }
