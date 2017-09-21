@@ -3,7 +3,11 @@ package com.sssj;
 import org.junit.Test;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
 
 import static org.junit.Assert.*;
 
@@ -104,6 +108,27 @@ public class MainTest {
         assertTrue(new File("./testFolder/testFile2").exists());
     }
 
+    @Test
+    public void source의xml파일들을읽어온다(){
+        String source = "";
+        Paths result = folderResolver(source, "");
+        System.out.println(result.source);
+        List<File> files = getFiles(result.source);
+    }
+
+    private List<File> getFiles(String source){
+        File folder = new File(source);
+        File[] listOfFiles = folder.listFiles();
+        List<File> listOfXmlFiles = new ArrayList<>();
+        for (File file : listOfFiles) {
+            if (file.isFile()) {
+                if(file.getName().contains(".xml"))
+                    listOfXmlFiles.add(file);
+            }
+        }
+        return listOfXmlFiles;
+
+    }
 
     private static void copyFileUsingStream(File source, File dest) throws IOException {
         InputStream is = null;
