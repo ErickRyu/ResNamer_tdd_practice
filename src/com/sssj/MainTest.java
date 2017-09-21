@@ -1,9 +1,9 @@
 package com.sssj;
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import org.junit.Test;
 
 import java.io.*;
+import java.nio.file.Path;
 
 import static org.junit.Assert.*;
 
@@ -15,7 +15,7 @@ public class MainTest {
         String source = "sourceFolder";
         Paths path = new Paths(source, "");
         String toSave = getCurrentPath() + "/" + source + "/res/drawable-xhdpi/resfile_01.xml";
-        String result = getSaveTargetAndName(path, fileName);
+        String result = getPathAfterResolveAndMoveFile(path, fileName).target;
         assertEquals(toSave, result);
     }
 
@@ -26,7 +26,7 @@ public class MainTest {
         String target = "targetFolder";
         Paths path = new Paths(source, target);
         String toSave = getCurrentPath() + "/" + target + "/res/drawable-xhdpi/resfile_01.xml";
-        String result = getSaveTargetAndName(path, fileName);
+        String result = getPathAfterResolveAndMoveFile(path, fileName).target;
         assertEquals(toSave, result);
     }
 
@@ -46,7 +46,7 @@ public class MainTest {
         String target = "";
         Paths path = new Paths(source, target);
         String toSave = getCurrentPath() + "/res/drawable-xhdpi/resfile_01.xml";
-        String result = getSaveTargetAndName(path, fileName);
+        String result = getPathAfterResolveAndMoveFile(path, fileName).target;
         assertEquals(toSave, result);
     }
 
@@ -111,9 +111,10 @@ public class MainTest {
             os.close();
         }
     }
-    private String getSaveTargetAndName(Paths path, String fileName) {
-        String target = folderResolver(path.source, path.target).target;
-        return target + moveFile(fileName);
+    private Paths getPathAfterResolveAndMoveFile(Paths path, String fileName) {
+        Paths newPath = folderResolver(path.source, path.target);
+        newPath.target = newPath.target + moveFile(fileName);
+        return newPath;
     }
 
     private String moveFile(String fileName) {
