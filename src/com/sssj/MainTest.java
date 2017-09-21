@@ -49,6 +49,16 @@ public class MainTest {
         String result = getPathAfterResolveAndMoveFile(path, fileName).target;
         assertEquals(toSave, result);
     }
+    @Test
+    public void source가없을경우_현재폴더의파일을복사한다()throws IOException{
+        String fileName = "Res1.xml";
+        String source = "";
+        String target = "";
+        Paths path = new Paths(source, target);
+        path = getPathAfterResolveAndMoveFile(path, fileName);
+        copyFileUsingStream(new File(path.source), new File(path.target));
+
+    }
 
     @Test
     public void file_name에_골뱅이가_없으면_mdpi() {
@@ -113,6 +123,7 @@ public class MainTest {
     }
     private Paths getPathAfterResolveAndMoveFile(Paths path, String fileName) {
         Paths newPath = folderResolver(path.source, path.target);
+        newPath.source += "/" + fileName;
         newPath.target = newPath.target + moveFile(fileName);
         return newPath;
     }
@@ -155,7 +166,6 @@ public class MainTest {
                 paths = new Paths(currentPath, currentPath);
             }
             else if (target.isEmpty()) {
-                System.out.println("target is empty");
                 source = new File("./" + source).getCanonicalPath();
                 target = source;
                 paths = new Paths(source, target);
