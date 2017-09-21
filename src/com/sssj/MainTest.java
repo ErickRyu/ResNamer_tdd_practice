@@ -146,17 +146,6 @@ public class MainTest {
         }
     }
 
-
-    private Paths folderResolver_0_1(String source, String target) {
-        if (source.isEmpty()) {
-            return new Paths(getCurrentPath(), getCurrentPath());
-        }
-        if (target.isEmpty()) {
-            return new Paths(source, source);
-        }
-        return new Paths(source, target);
-    }
-
     private Paths folderResolver(String source, String target) {
         Paths paths = null;
         try {
