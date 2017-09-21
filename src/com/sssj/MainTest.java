@@ -87,11 +87,13 @@ public class MainTest {
 
     @Test
     public void file을copy한다() throws IOException{
-        File source = new File("./testfile");
+        File source = new File("./testfile.xml");
         File dest = new File("./testFolder/testFile2");
         System.out.println(source.getCanonicalPath());
         copyFileUsingStream(source, dest);
+        assertTrue(new File("./testFolder/testFile2").exists());
     }
+
 
     private static void copyFileUsingStream(File source, File dest) throws IOException {
         InputStream is = null;
